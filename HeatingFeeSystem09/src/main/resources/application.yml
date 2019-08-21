@@ -1,0 +1,20 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.98.51.38:3306/HTDB?serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+      
+mybatis:
+  mapper-locations:
+  - classpath*:/mappers/**/*.xml
+  type-aliases-package: cn.jyu.heatingfeesystem.model
+logging:
+  level:
+    cn.jyu.heatingfeesystem.mapper: debug
+    
