@@ -14,10 +14,10 @@
 		$(function() {
 			
 			//获取数据
-			$.getJSON("http://47.98.51.38:3306/paymenttype/list/all/page",{page:page,rows,rows},function(data)
-			{
-	           alert(date.count);
-	        });
+			$.post("paymenttype/list/all/page",function(result){
+				alert("获取数据");
+			});
+						
 			
 			
 			//让所有的表格内容居中
