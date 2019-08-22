@@ -29,7 +29,7 @@ public class PaymentTypeController
 	private PaymentTypeService paymentTypeService;
 	
 	// 分页查询所有付款方式。
-	@PostMapping("/list/all/page")
+	@GetMapping("/list/all/page")
 	public ResultMessage<PaymentTypeModel> seleteAllWithPage(@RequestParam(required = false,defaultValue ="10") int rows,@RequestParam(required = false,defaultValue = "1") int page) throws Exception 
 	{
 		ResultMessage<PaymentTypeModel> result=new ResultMessage<PaymentTypeModel>("OK","取得年度供热价格列表分页模式成功");
