@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
 import cn.jyu.heatingfeesystem.model.HeatingPriceModel;
 import cn.jyu.heatingfeesystem.service.HeatingPriceService;
 import cn.jyu.heatingfeesystem.util.ResultMessage;
@@ -24,7 +26,7 @@ import cn.jyu.heatingfeesystem.util.ResultMessage;
 public class HeatingPriceController {
 	@Autowired
 	private HeatingPriceService heatingPriceService = null;
-
+	
 	// 添加年度供热价格
 	@RequestMapping("/add")
 	public ResultMessage<HeatingPriceModel> add(HeatingPriceModel heatingPrice) {
@@ -51,7 +53,7 @@ public class HeatingPriceController {
 		ResultMessage<HeatingPriceModel> result = new ResultMessage<HeatingPriceModel>("OK", "删除年度供热价格成功");
 		result.setModel(heatingPrice);
 		return result;
-	
+
 	}
 
 	// 通过年份查询年度供热价格
@@ -66,11 +68,11 @@ public class HeatingPriceController {
 	// 查询所有年度供热价格，无分页
 	@GetMapping("/list/all")
 	public ResultMessage<HeatingPriceModel> seleteAll() throws Exception {
-		
+
 		ResultMessage<HeatingPriceModel> result = new ResultMessage<HeatingPriceModel>("OK", "查询所有年度供热价格成功，无分页");
 		result.setList(heatingPriceService.selectAll());
 		return result;
-		
+
 	}
 
 	// 查询所有年度供热价格，分页
@@ -86,4 +88,6 @@ public class HeatingPriceController {
 		result.setRows(rows);
 		return result;
 	}
+
+	
 }

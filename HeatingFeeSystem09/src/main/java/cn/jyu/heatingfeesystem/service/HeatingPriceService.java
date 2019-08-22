@@ -39,4 +39,5 @@ public interface HeatingPriceService {
 	// 取得所有年度供热价格列表,分页模式
 	public List<HeatingPriceModel> selectListByAllWithPage(int rows, int page)
 			throws Exception;
+	
 }

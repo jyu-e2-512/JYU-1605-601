@@ -69,4 +69,5 @@ public class HeatingPriceServiceImpl implements HeatingPriceService {
 		return heatingPriceMapper.selectListByAllWithPage(rows*(page-1), rows);
 	}
 
+	
 }
