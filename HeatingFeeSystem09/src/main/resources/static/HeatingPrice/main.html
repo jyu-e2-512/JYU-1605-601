@@ -5,23 +5,26 @@
       <div class="box">
         <div class="box-header">
           <div class="row">
-             <div class="col-md-6"> <h4 class="box-title">部门列表</h4></div>
+             <div class="col-md-6"> <h4 class="box-title">年度供热价格列表</h4></div>
              <div class="col-md-6 text-right">
-             	<a href="#" id="DepartmentAddLink" class="btn btn-info">增加</a> 
-             	<a href="#" id="DepartmentModifyLink" class="btn btn-info">修改</a> 
-            	<a href="#" id="DepartmentDelteLink" class="btn btn-info">删除</a>
-             	<a href="#" id="DepartmentViewLink" class="btn btn-info">详细</a>
+             	<a href="#" id="heatingPriceAddLink" class="btn btn-info">增加</a> 
+             	<a href="#" id="heatingPriceModifyLink" class="btn btn-info">修改</a> 
+            	<a href="#" id="heatingPriceDelteLink" class="btn btn-info">删除</a>
+             	<a href="#" id="heatingPriceViewLink" class="btn btn-info">详细</a>
               </div>
           </div>
          
         </div>
         <!-- /.box-header -->
-      <div class="box-body" id="departmentmaincontent">
-        <table id="DepartmentTable" class="table table-bordered table-hover">
+      <div class="box-body" id="heatingPricemaincontent">
+        <table id="heatingPriceTable" class="table table-bordered table-hover">
           <thead>
           <tr>
-            <th>部门编码</th>
-            <th>部门名称</th>
+            <th>供热年份</th>
+            <th>居民价格</th>
+            <th>公建价格</th>
+            <th>供热天数</th>
+            <th>备注</th>
           </tr>
           </thead>
           <tbody>
@@ -29,8 +32,8 @@
           </tfoot>
 		</table>
 		<div class="row">
-		   <div class="col-md-6 text-left">
-		    部门个数:<span id="count"></span>  页数:<span id="pagecount"></span>
+		  <div class="col-md-6 text-left">
+		    年份个数:<span id="count"></span>  页数:<span id="pagecount"></span>
 		   </div>
 		   <div class="col-md-6 text-right" id="page_nav">
 		   <a href="top" class="btn btn-default">首页</a> 
@@ -49,6 +52,6 @@
   <!-- /.col -->
 </div>
 <!-- /.row -->
-<div id="DepartmentDialogArea">
+<div id="heatingPriceDialogArea">
     
 </div>
