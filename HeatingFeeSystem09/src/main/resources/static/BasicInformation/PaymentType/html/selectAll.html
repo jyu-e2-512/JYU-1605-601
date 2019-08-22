@@ -10,7 +10,10 @@
 			
 			
 			//获取数据
-			$.get("http://localhost:8080/paymenttype/list/all/page",function(result){
+			$.get("http://localhost:8080/paymenttype/list/all/page",{page:page,rows:rows},function(date)
+			{
+				alert(page);
+				alert(date.list);
 				alert("获取数据");
 			});		
 			
