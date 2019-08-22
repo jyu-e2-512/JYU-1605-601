@@ -58,7 +58,7 @@ public class HeatingPriceController {
 	}
 
 	// 查询所有年度供热价格，分页
-	@GetMapping("/list/all/page")
+	@RequestMapping("/list/all/page")
 	public ResultMessage<HeatingPriceModel> seleteAllWithPage(@RequestParam(required = false,defaultValue ="10") int rows,@RequestParam(required = false,defaultValue = "1") int page) throws Exception {
 		ResultMessage<HeatingPriceModel> result=new ResultMessage<HeatingPriceModel>("OK","取得年度供热价格列表分页模式成功");
 		result.setCount(heatingPriceService.selectCountByAll());
