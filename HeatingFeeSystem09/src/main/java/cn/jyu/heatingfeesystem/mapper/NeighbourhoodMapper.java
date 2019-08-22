@@ -2,6 +2,9 @@ package cn.jyu.heatingfeesystem.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import cn.jyu.heatingfeesystem.model.HeatingPriceModel;
 import cn.jyu.heatingfeesystem.model.NeighbourhoodModel;
 
 /**
@@ -22,4 +25,8 @@ public interface NeighbourhoodMapper {
 			public List<NeighbourhoodModel> selectAll();
 			//通过编号查询小区信息
 			public NeighbourhoodModel selectByTypeNo(int hooddNo);
+			// 查询所有小区的总数
+			public int selectCountByAll() throws Exception;
+			//取得所有小区列表,分页模式
+			public List<NeighbourhoodModel> selectListByAllWithPage(@Param("start") int start,@Param("rows") int rows) throws Exception;
 }

@@ -46,4 +46,28 @@ public class NeighbourhoodServiceImpl implements NeighbourhoodService{
 		return neighbourhood;
 	}
 
+	@Override
+	public int selectCountByAll() throws Exception {
+		return neighbourhoodMapper.selectCountByAll();
+		
+	}
+
+	@Override
+	public int getPageCountByAll(int rows) throws Exception {
+		int pageCount=0;
+		int count=this.selectCountByAll();
+		if(count%rows==0) {
+			pageCount=count/rows;
+		}
+		else {
+			pageCount=count/rows+1;
+		}
+		return pageCount;
+	}
+
+	@Override
+	public List<NeighbourhoodModel> selectListByAllWithPage(int rows, int page) throws Exception {
+		return neighbourhoodMapper.selectListByAllWithPage(rows*(page-1), rows);
+	}
+
 }
