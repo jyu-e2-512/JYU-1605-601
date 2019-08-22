@@ -10,7 +10,7 @@
 			
 			
 			//获取数据
-			/*$.post("paymenttype/list/all/page",function(result){
+			/*$.post("http://localhost:8080/paymenttype/list/all/page",function(result){
 				alert("获取数据");
 			});	*/		
 			
@@ -25,15 +25,12 @@
 			//点击删除确认后删除此记录
 			$(".delete").on("click",function()
 			{
-				if(confirm("确定删除增加该付款类型?")){
+				var ok=confirm("确定删除增加该付款类型?");
+				if(ok==true){
 					var url="../../BasicInformation/PaymentType/html/selectAll.html";
 					$("#main").load(url);				　　
 				}
-				else
-				{
-					var url="../../BasicInformation/PaymentType/html/selectAll.html";
-					$("#main").load(url);
-				}
+				
 			});
 			//点击修改按钮后加载update页面
 			$(".update").on("click",function(){
