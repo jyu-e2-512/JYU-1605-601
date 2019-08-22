@@ -30,37 +30,47 @@ public class HeatingPriceController {
 	public ResultMessage<HeatingPriceModel> add(HeatingPriceModel heatingPrice) {
 		System.out.println("AAA");
 		heatingPriceService.insert(heatingPrice);
-		return new ResultMessage<HeatingPriceModel>("OK", "添加年度供热价格成功");
+		ResultMessage<HeatingPriceModel> result = new ResultMessage<HeatingPriceModel>("OK", "添加年度供热价格成功");
+		result.setModel(heatingPrice);
+		return result;
 	}
 
 	// 删除年度供热价格
 	@PostMapping("/delete")
 	public ResultMessage<HeatingPriceModel> delete(HeatingPriceModel heatingPrice) {
 		heatingPriceService.delete(heatingPrice);
-		return new ResultMessage<HeatingPriceModel>("OK", "删除年度供热价格成功");
+		ResultMessage<HeatingPriceModel> result = new ResultMessage<HeatingPriceModel>("OK", "修改年度供热价格成功");
+		result.setModel(heatingPrice);
+		return result;
 	}
 
 	// 修改年度供热价格
 	@PostMapping("/update")
 	public ResultMessage<HeatingPriceModel> update(HeatingPriceModel heatingPrice) {
 		heatingPriceService.update(heatingPrice);
-		return new ResultMessage<HeatingPriceModel>("OK", "修改年度供热价格成功");
+		ResultMessage<HeatingPriceModel> result = new ResultMessage<HeatingPriceModel>("OK", "删除年度供热价格成功");
+		result.setModel(heatingPrice);
+		return result;
+	
 	}
 
 	// 通过年份查询年度供热价格
 	@GetMapping("/get")
 	public ResultMessage<HeatingPriceModel> getByHeatingYear(String heatingYear) {
-		heatingPriceService.selectByHeatingYear(heatingYear);
-		return new ResultMessage<HeatingPriceModel>("OK", "通过年份查询年度供热价格成功");
+		HeatingPriceModel heatingPrice = heatingPriceService.selectByHeatingYear(heatingYear);
+		ResultMessage<HeatingPriceModel> result = new ResultMessage<HeatingPriceModel>("OK", "通过年份查询年度供热价格成功");
+		result.setModel(heatingPrice);
+		return result;
 	}
 
 	// 查询所有年度供热价格，无分页
 	@GetMapping("/list/all")
 	public ResultMessage<HeatingPriceModel> seleteAll() throws Exception {
-		heatingPriceService.selectAll();
-		System.out.println(heatingPriceService.selectAll().size());
-		System.out.println(heatingPriceService.selectCountByAll());
-		return new ResultMessage<HeatingPriceModel>("OK", "查询所有年度供热价格成功，无分页");
+		
+		ResultMessage<HeatingPriceModel> result = new ResultMessage<HeatingPriceModel>("OK", "查询所有年度供热价格成功，无分页");
+		result.setList(heatingPriceService.selectAll());
+		return result;
+		
 	}
 
 	// 查询所有年度供热价格，分页

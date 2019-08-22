@@ -11,6 +11,6 @@ public class ChenWujieTest {
 	public static void main(String[] args) throws Exception {
 		ApplicationContext acforconfig = new AnnotationConfigApplicationContext(AppConfig.class);
 		HeatingPriceService heatingPriceService = acforconfig.getBean("heatingPriceService",HeatingPriceService.class);
-		System.out.println(heatingPriceService.selectCountByAll());
+		System.out.println(heatingPriceService.selectByHeatingYear("2018"));
 	}
 }
