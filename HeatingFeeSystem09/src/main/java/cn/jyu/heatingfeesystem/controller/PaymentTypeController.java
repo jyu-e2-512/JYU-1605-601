@@ -30,7 +30,7 @@ public class PaymentTypeController
 	
 	// 分页查询所有付款方式。
 	@GetMapping("/list/all/page")
-	public ResultMessage<PaymentTypeModel> seleteAllWithPage(@RequestParam(required = false,defaultValue ="10") int rows,@RequestParam(required = false,defaultValue = "1") int page) throws Exception 
+	public ResultMessage<PaymentTypeModel> seleteAllWithPage(@RequestParam(required = false,defaultValue ="5") int rows,@RequestParam(required = false,defaultValue = "1") int page) throws Exception 
 	{
 		ResultMessage<PaymentTypeModel> result=new ResultMessage<PaymentTypeModel>("OK","取得年度供热价格列表分页模式成功");
 		result.setCount(paymentTypeService.selectCountByAll());
@@ -38,8 +38,8 @@ public class PaymentTypeController
 		result.setPageCount(paymentTypeService.getPageCountByAll(rows));
 		result.setPage(page);
 		result.setRows(rows);	
-		System.out.println(paymentTypeService==null);
-		System.out.println("mmp");
+		System.out.println("当前页数"+page+"/"+result.getPageCount());
+		System.out.println("每页数量:"+rows);
 		return result;
 	}
 	
@@ -48,6 +48,7 @@ public class PaymentTypeController
 	public ResultMessage<PaymentTypeModel> add(PaymentTypeModel paymentType) 
 	{
 		paymentTypeService.insert(paymentType);
+		System.out.println("添加");
 		return new ResultMessage<PaymentTypeModel>("OK", "添加年度供热价格成功");
 	}
 	
