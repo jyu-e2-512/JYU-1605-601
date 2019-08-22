@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.ComplainTypeMapper">
+	<cache/>
+	<resultMap id="ComplainTypeResultMap" type="ComplainType">
+		<id property="typeNo" column="typeno"/>
+		<result property="typeName" column="typename"/>	
+ 	</resultMap>
+
+ 	
+	<!-- 增加一种投诉类型 -->
+	<insert id="insert" flushCache="true">
+		insert into ht_complaintype values(#{typeNo},#{typeName})
+	</insert>
+	
+	<!-- 删除一种投诉类型 -->
+	<delete id="delete" flushCache="true">
+		delete from ht_complaintype  where typeno=#{typeNo}
+	</delete>
+	
+	<!--修改投诉类型 -->
+	<update id="update" flushCache="true">
+		update ht_complaintype set typename=#{typeName} where typeno=#{typeNo}
+	</update>
+	
+	<!-- 查询所有的投诉类型 -->
+	<select id="selectAll" flushCache="false" resultMap="ComplainTypeResultMap">
+		select * from ht_complaintype 
+	</select>
+	
+	<!-- 通过编号查询投诉类型 -->
+	<select id="selectByTypeNo" flushCache="false" resultMap="ComplainTypeResultMap">
+		select * from ht_complaintype where typeno=#{typeNo}
+	</select>
+	
+	
+</mapper>

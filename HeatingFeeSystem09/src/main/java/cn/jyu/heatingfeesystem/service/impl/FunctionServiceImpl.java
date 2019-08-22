@@ -2,6 +2,7 @@ package cn.jyu.heatingfeesystem.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.jyu.heatingfeesystem.mapper.FunctionMapper;
@@ -17,7 +18,8 @@ import lombok.Data;
 @Data
 public class FunctionServiceImpl implements FunctionService
 {
-	private FunctionMapper functionMapper;
+	@Autowired
+	private FunctionMapper functionMapper = null;
 	@Override
 	public void insert(FunctionModel function) 
 	{

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.HomeStopRecordMapper">
+	<cache/>
+	<resultMap id="HomeStopRecordResultMap" type="HomeStopRecord">
+		<id property="recordNo" column="recordno"/>
+		<result property="stopArea" column="stoparea"/>	
+		<result property="stopDate" column="stopdate"/>	
+		<result property="stopReason" column="stopreason"/>	
+		<result property="stopPerson" column="stopperson"/>	
+		<result property="stopDesc" column="stopdesc"/>
+		<result property="stopStatus" column="stopstatus"/>
+ 	</resultMap>
+ 	
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="HomeStopRecordResultMapWithHomeFeeByNestedResultMap" type="HomeStopRecord" extends="HomeStopRecordResultMap">
+ 		<association property="homeFeeModel" resultMap="cn.jyu.heatingfeesystem.mapper.HomeFeeMapper.HomeFeeResultMap"/>
+ 	</resultMap>
+ 	
+ 	
+ 	
+	<!--//增加报停信息  -->
+	<insert id="insert" flushCache="true">
+		insert into ht_homeStopRecord #{recordNo},#{homeFeeModel.feeNo},#{stopArea},#{stopDate},
+		#{stopReason},#{stopPreson},#{stopDesc},#{stopStatus}
+	</insert>
+	
+	<!--删除报停家庭信息  -->
+	<delete id="delete" flushCache="true">
+		delete from ht_homeStopRecord  where recordNo=#{recordNo}
+	</delete>
+	
+	<!--//修改报停家庭信息  -->
+	<update id="update" flushCache="true">
+		update ht_homeStopRecord  set feeNo=#{homeFeeModel.feeNo},stopArea=#{stopArea},stopDate=#{stopDate},
+		stopReason=#{stopReason},stopPreson=#{stopPreson},stopDesc=#{stopDesc},stopStatus=#{stopStatus} 
+		where recordNo=#{recordNo}
+	</update>
+	
+	<!-- 查询所有的报停家庭信息 -->
+	<select id="selectAll" flushCache="false" resultMap="HomeStopRecordResultMap">
+		select * from ht_homeStopRecord
+	</select>
+
+	<!-- 通过编号查询报停家庭信息 -->
+	<select id="selectByRecordNo" flushCache="false" resultMap="HomeStopRecordResultMap">
+		select * from ht_homeStopRecord  where recordNo=#{recordNo}
+	</select>
+
+
+</mapper>

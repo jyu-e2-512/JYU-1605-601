@@ -19,6 +19,7 @@ import lombok.Data;
 @Data
 public class PaymentTypeServiceImpl implements PaymentTypeService
 {
+	@Autowired
 	private PaymentTypeMapper paymentTypeMapper;
 	@Override
 	public void insert(PaymentTypeModel paymentType) 

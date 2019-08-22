@@ -2,6 +2,7 @@ package cn.jyu.heatingfeesystem.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.jyu.heatingfeesystem.mapper.UserMapper;
@@ -12,7 +13,7 @@ import lombok.Data;
 @Data
 public class UserServiceImpl implements UserService {
 
-	//@Autowired
+	@Autowired
 	private UserMapper userMapper;
 	@Override
 	public void insert(UserModel user) {

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.PublicHouseMapper">
+	<cache/>
+	<resultMap id="PublicHouseResultMap" type="PublicHouse">
+		<id property="houseNo" column="houseno"/>
+		<result property="heatingCode" column="heatingcode"/>
+		<result property="houseName" column="housename"/>
+		<result property="houseCode" column="houseCode"/>
+		<result property="building" column="building"/>
+		<result property="houseArea" column="housearea"/>
+		<result property="address" column="address"/>
+		<result property="postCode" column="postcode"/>
+		<result property="contactName" column="contactname"/>
+		<result property="tel" column="tel"/>	
+		<result property="mobile" column="mobile"/>	
+		<result property="mail" column="mail"/>
+		<result property="qq" column="qq"/>	
+		<result property="heatingStatus" column="heatingstatus"/>
+		<result property="departmentCode" column="departmentcode"/>
+		<result property="floorCode" column="floorcode"/>
+		<result property="heatingArea" column="heatingarea"/>
+ 	</resultMap>
+ 	
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="PublicHouseResultMapWithNeighbourhoodByNestedResultMap" type="PublicHouse" extends="PublicHouseResultMap">
+ 		<association property="neighbourhoodModel" resultMap="cn.jyu.heatingfeesystem.mapper.NeighbourhoodMapper.NeighbourhoodResultMap"/>
+ 	</resultMap>
+ 	
+	<!--//增加公建信息  -->
+	<insert id="insert" flushCache="true">
+		insert into ht_publichouse values(#{houseNo},#{neighbourhoodModel.hoodNo},#{heatingCode},#{houseName},#{houseCode},#{building},
+		#{houseArea},#{address},#{postCode},#{contactName},#{tel},#{mobile},#{mail},#{qq},#{heatingStatus},#{departmentCode},#{floorCode},#{heatingArea})
+		
+	</insert>
+	
+	<!--删除公建信息  -->
+	<delete id="delete" flushCache="true">
+		delete from ht_publichouse  where houseno=#{houseNo}
+	</delete>
+	
+	<!--//修改公建信息  -->
+	<update id="update" flushCache="true">
+		update ht_publichouse set hoodNo=#{neighbourhoodModel.hoodNo},heatingCode=#{heatingCode},houseName=#{houseName},houseCode=#{houseCode},building=#{building},
+		houseArea=#{houseArea},address=#{address},postCode=#{postCode},contactName=#{contactName},tel=#{tel},
+		mobile=#{mobile},mail=#{mail},qq=#{qq},heatingStatus=#{heatingStatus},departmentCode=#{departmentCode},floorCode=#{floorCode},heatingArea=#{heatingArea}
+		where houseno=#{houseNo}
+	</update>
+	
+	<!-- 查询所有的公建信息 -->
+	<select id="selectAll" flushCache="false" resultMap="PublicHouseResultMap">
+		select * from ht_publichouse
+	</select>
+
+	<!-- 通过编号查询公建信息 -->
+	<select id="selectByHouseNo" flushCache="false" resultMap="PublicHouseResultMap">
+		select * from ht_publichouse where houseno=#{houseNo}
+	</select>
+
+
+</mapper>

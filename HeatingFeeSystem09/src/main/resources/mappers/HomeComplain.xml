@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.HomeComplainMapper">
+	<cache/>
+	<resultMap id="HomeComplainResultMap" type="HomeComplain">
+		<id property="complainNo" column="complainno"/>
+		<result property="complainTitle" column="complaintitle"/>	
+		<result property="complainContent" column="complaincontent"/>	
+		<result property="requestContent" column="requestcontent"/>	
+		<result property="contactPerson" column="contactPerson"/>		
+		<result property="tel" column="tel"/>	
+		<result property="mobile" column="mobile"/>	
+		<result property="mail" column="mail"/>
+		<result property="qq" column="qq"/>
+		<result property="serviceStartDate" column="servicestartdate"/>
+		<result property="serviceEndDate" column="serviceenddate"/>	
+		<result property="serviceContent" column="servicecontent"/>	
+		<result property="servicePerson" column="serviceperson"/>		
+		<result property="feedBackDate" column="feedbackdate"/>	
+		<result property="homeComment" column="homecomment"/>
+		<result property="assuranceDate" column="assurancedate"/>
+		<result property="assuranceFee" column="assurancefee"/>
+		<result property="assurancePayDate" column="assurancepaydate"/>
+		<result property="complainStatus" column="complainstatus"/>
+ 	</resultMap>
+ 	
+ 	
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="HomeComplainResultMapWithHomeByNestedResultMap" type="HomeComplain" extends="HomeComplainResultMap">
+ 		<association property="homeModel" resultMap="cn.jyu.heatingfeesystem.mapper.HomeMapper.HomeResultMap"/>
+ 	</resultMap>
+ 	
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="HomeComplainResultMapWithComplainTypeByNestedResultMap" type="HomeComplain" extends="HomeComplainResultMap">
+ 		<association property="complainTypeModel" resultMap="cn.jyu.heatingfeesystem.mapper.ComplainTypeMapper.ComplainTypeResultMap"/>
+ 	</resultMap>
+		
+	<!--增加用户投诉  -->
+	<insert id="insert" flushCache="true">
+		insert into ht_homecomplain value(#{complainNo},#{homeModel.homeNo},#{complainTypeModel.typeNo},#{complainTitle},
+		#{complainContent},#{requestContent},#{complainDate},#{contactPerson},#{tel},#{mobile},#{mail},#{qq},#{serviceStartDate},
+		#{serviceEndDate},#{serviceContent},#{servicePerson},#{feedBackDate},#{homeComment},#{assuranceDate},#{assuranceFee},
+		#{assurancePayDate},#{complainStatus})
+	</insert>
+
+	<!--删除用户投诉  -->
+	<delete id="delete" flushCache="true">
+		delete from ht_homecomplain  where complainno=#{complainNo}
+	</delete>
+	
+	<!--修改用户投诉  -->
+	<update id="update" flushCache="true">
+		update ht_homecomplain set homeNo=#{homeModel.homeNo},typeNo=#{complainTypeModel.typeNo},complaintitle=#{complainTitle},
+		complaincontent=#{complainContent},requestcontent=#{requestContent},complaindate=#{complainDate},contactperson=#{contactPerson},tel=#{tel},mobile=#{mobile},mail=#{mail},qq=#{qq},serviceStartdate=#{serviceStartDate},
+		serviceEndDate=#{serviceEndDate},serviceContent=#{serviceContent},servicePerson=#{servicePerson},feedBackDate=#{feedBackDate},homeComment=#{homeComment},assuranceDate=#{assuranceDate},assuranceFee=#{assuranceFee},
+		assurancePayDate=#{assurancePayDate},complainStatus=#{complainStatus} where complainno=#{complainNo}
+	</update>
+	
+	<!-- 查询所有的用户投诉 -->
+	<select id="selectAll" flushCache="false" resultMap="HomeComplainResultMap">
+		select * from ht_homecomplain
+	</select>
+
+	<!-- 通过编号查询用户投诉 -->
+	<select id="selectByComplainNo" flushCache="false" resultMap="HomeComplainResultMap">
+		select * from ht_homecomplain where complainno=#{complainNo}
+	</select>
+
+</mapper>

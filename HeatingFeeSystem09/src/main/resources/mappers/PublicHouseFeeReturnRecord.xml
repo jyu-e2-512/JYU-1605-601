@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.PublicHouseFeeReturnRecordMapper">
+
+	<!-- 包含公建供热退费记录所有信息的resultMap,关联属性publicHouse和paymentType -->
+	<resultMap id="PublicHouseFeeReturnRecordResultMapWithPublicHouseAndPaymentTypeByNestedResultMap" type="PublicHouseFeeReturnRecord">
+		<id property="recordNo" column="recordno"/>
+		<result property="amount" column="amount"/>
+		<result property="returnDate" column="returndate"/>
+		<result property="person" column="person"/>
+		<result property="checkCode" column="checkcode"/>
+		<result property="invoiceCode" column="invoicecode"/>
+		<result property="recordDesc" column="recorddesc"/>
+		<result property="recordStatus" column="recordstatus"/>
+		<association property="publicHouse" column="feeno" javaType="PublicHouseFee" resultMap="cn.jyu.heatingfeesystem.mapper.PublicHouseFeeMapper.PublicHouseFeeResultMap"/>
+		<association property="paymentType" column="paymenttypeno" javaType="PaymentType" resultMap="cn.jyu.heatingfeesystem.mapper.PaymentTypeMapper.PaymentTypeResultMap"/>
+	</resultMap>
+
+	<!-- 增加一条公建供热退费记录 -->
+	<insert id="insert" flushCache="true" keyColumn="recordno" keyProperty="recordNo" useGeneratedKeys="true">
+		insert into HT_PublicHouseFeeReturnRecord (feeno,paymenttypeno,amount,returndate,person,checkcode,
+		invoicecode,recorddesc,recordstatus)
+		values(#{publicHouse.feeNo},#{paymentType.typeNo},#{amount},#{returnDate},#{person},#{checkCode},
+		#{invoiceCode},#{recordDesc},#{recordStatus})
+	</insert>
+	
+	<!-- 删除一条公建供热退费记录 -->
+	<delete id="delete" flushCache="true">
+		delete from HT_PublicHouseFeeReturnRecord  where recordno=#{recordNo}
+	</delete>
+	
+	<!--修改一条公建供热退费记录 -->
+	<update id="update" flushCache="true">
+		update HT_PublicHouseFeeReturnRecord set feeno=#{publicHouse.feeNo},paymenttypeno=#{paymentType.typeNo},
+		amount=#{amount},returndate=#{returnDate},person=#{person},checkcode=#{checkCode},invoicecode=#{invoiceCode},
+		recorddesc=#{recordDesc},recordStatus=#{recordStatus}
+		where recordno=#{recordNo}
+	</update>
+	
+	<!-- 查询所有的公建供热退费记录 -->
+	<select id="selectAll" flushCache="false" resultMap="PublicHouseFeeReturnRecordResultMapWithPublicHouseAndPaymentTypeByNestedResultMap">
+		select * from HT_PublicHouseFeeReturnRecord
+	</select>
+	
+	<!-- 通过编号查询公建供热退费记录 -->
+	<select id="selectByrecordNo" flushCache="false" resultMap="PublicHouseFeeReturnRecordResultMapWithPublicHouseAndPaymentTypeByNestedResultMap">
+		select * from HT_PublicHouseFeeReturnRecord where recordno=#{recordNo}
+	</select>
+	
+</mapper>

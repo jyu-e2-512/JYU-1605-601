@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.PaymentTypeMapper">
+
+	<!-- 付款方式的基本resultmap,无关联属性 -->
+	<resultMap type="PaymentType" id="PaymentTypeResultMap">
+		<id property="typeNo" column="typeno"/>
+		<result property="typeName" column="typename"/>
+	</resultMap>
+
+	<!-- 增加一种付款方式 -->
+	<insert id="insert" flushCache="true" keyColumn="typeno" keyProperty="typeNo" useGeneratedKeys="true">
+		insert into ht_paymenttype (typename) values(#{typeName})
+	</insert>
+	
+	<!-- 删除一种付款方式 -->
+	<delete id="delete" flushCache="true">
+		delete from ht_paymenttype  where typeno=#{typeNo}
+	</delete>
+	
+	<!--修改付款方式 -->
+	<update id="update" flushCache="true">
+		update ht_paymenttype set typename=#{typeName} where typeno=#{typeNo}
+	</update>
+	
+	<!-- 查询所有的缴费方式 -->
+	<select id="selectAll" flushCache="false" resultMap="PaymentTypeResultMap">
+		select * from ht_paymenttype 
+	</select>
+	
+	<!-- 通过编号查询缴费方式 -->
+	<select id="selectByTypeNo" flushCache="false" resultMap="PaymentTypeResultMap">
+		select * from ht_paymenttype where typeno=#{typeNo}
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectListByAllWithPage" flushCache="false" resultMap="PaymentTypeResultMap">
+		select * from ht_paymenttype limit #{start},#{rows}
+	</select>
+	
+	<!-- 查询所有付款类型的总数 -->
+	<select id="selectCountByAll" resultType="int">
+		select count(typeno) from ht_paymenttype
+	</select>
+	
+</mapper>

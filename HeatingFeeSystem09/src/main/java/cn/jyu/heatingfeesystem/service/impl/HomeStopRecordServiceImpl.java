@@ -2,6 +2,7 @@ package cn.jyu.heatingfeesystem.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.jyu.heatingfeesystem.mapper.FunctionMapper;
@@ -20,7 +21,7 @@ import lombok.Data;
 @Service("homeStopRecordService")
 @Data
 public class HomeStopRecordServiceImpl implements HomeStopRecordService {
-	
+	@Autowired
 	private HomeStopRecordMapper homeStopRecordMapper;
 	@Override
 	public void insert(HomeStopRecordModel homeStopRecord) {

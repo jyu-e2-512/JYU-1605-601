@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.PublicHouseFeeMapper">
+
+	<cache/>
+	<resultMap id="PublicHouseFeeResultMap" type="PublicHouseFee">
+		<id property="feeNo" column="feeno"/>
+		<result property="heatingArea" column="heatingarea"/>
+		<result property="agreeFee" column="agreefee"/>
+		<result property="actualFee" column="actualfee"/>
+		<result property="debtFee" column="debtfee"/>
+		<result property="feeDesc" column="feedesc"/>
+		<result property="feeStatus" column="feestatus"/>
+		<result property="heatingdays" column="heatingdays"/>
+ 	</resultMap>
+ 	
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="PublicHouseFeeResultMapWithPublicHouseByNestedResultMap" type="PublicHouseFee" extends="PublicHouseFeeResultMap">
+ 		<association property="publicHouseModel" resultMap="cn.jyu.heatingfeesystem.mapper.PublicHouseMapper.PublicHouseResultMap"/>
+ 	</resultMap>
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="PublicHouseFeeResultMapWithHeatingPriceByNestedResultMap" type="PublicHouseFee" extends="PublicHouseFeeResultMap">
+ 		<association property="heatingPriceModel" resultMap="cn.jyu.heatingfeesystem.mapper.HeatingPriceMapper.HeatingPriceResultMap"/>
+ 	</resultMap>
+ 	
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="PublicHouseFeeResultMapWithPublicHouseFeePayRecordByNestedResultMap" type="PublicHouseFee" extends="PublicHouseFeeResultMap">
+ 		<association property="publicHouseFeePayRecordModel" resultMap="cn.jyu.heatingfeesystem.mapper.PublicHouseFeePayRecordMapper.PublicHouseFeePayRecordResultMap"/>
+ 	</resultMap>
+
+
+	<!-- 增加一种公建供热收费方式 -->
+	<insert id="insert" flushCache="true">
+		insert into ht_publichousefee values(#{feeNo},#{heatingArea},#{agreeFee},#{actualFee},#{debtFee},#{feeStatus},#{heatingdays},#{feeDesc})
+	</insert>
+	
+	<!-- 删除公建供热收费方式 -->
+	<delete id="delete" flushCache="true">
+		delete from ht_publichousefee  where feeno=#{feeNo}
+	</delete>
+	
+	<!--修改公建供热收费方式 -->
+	<update id="update" flushCache="true">
+		update ht_publichousefee set heatingarea=#{heatingArea},agreefee=#{agreeFee},actualarea=#{actualFee},
+		debtfee=#{debtFee},feestatus=#{feeStatus},heatingyears=#{heatingdays},
+		feedesc=#{feeDesc} where feeno=#{feeNo}
+	</update>
+	
+	<!-- 查询所有的公建供热收费方式 -->
+	<select id="selectAll" flushCache="false" resultMap="PublicHouseFeeResultMap">
+		select * from ht_publichousefee 
+	</select>
+	
+	<!-- 通过编号查询公建供热收费方式 -->
+	<select id="selectByFeeNo" flushCache="false" resultMap="PublicHouseFeeResultMap">
+		select * from ht_publichousefee where feeno=#{feeNo}
+	</select>
+	
+	
+</mapper>

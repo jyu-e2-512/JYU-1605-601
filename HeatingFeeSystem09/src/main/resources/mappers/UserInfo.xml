@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.UserInfoMapper">
+
+	<!-- 系统管理员辅助信息的基础resultma -->
+	<resultMap type="UserInfo" id="UserInfoResultMap">
+		<id property="user.uuserid" column="uuserid"/>
+		<result property="sex" column="sex"/>
+		<result property="age" column="age"/>
+		<result property="photo" column="photo"/>
+		<result property="photoFileName" column="photofilename"/>
+		<result property="photoContentType" column="photocontenttype"/>
+		<result property="mobile" column="mobile"/>
+		<result property="tel" column="tel"/>
+	</resultMap>
+
+	<!-- 增加一条系统管理员辅助信息 -->
+	<insert id="insert" flushCache="true" keyColumn="typeno" keyProperty="typeNo" useGeneratedKeys="true">
+		insert into ht_userinfo values(#{user.uuserid},#{sex},#{age},#{photo},#{photoFileName},
+		#{photoContentType},#{tel},#{mobile})
+	</insert>
+	
+	<!-- 删除一条系统管理员辅助信息 -->
+	<delete id="delete" flushCache="true">
+		delete from ht_userinfo  where uuserid=#{user.uuserid}
+	</delete>
+	
+	<!--修改一条指定的系统管理员辅助信息 -->
+	<update id="update" flushCache="true">
+		update ht_userinfo set sex=#{sex},age=#{age},photo=#{photo},mobile=#{mobile}, 
+		photofilename=#{photoFileName},photocontenttype=#{photoContentType},tel=#{tel} 
+		where uuserid=#{user.uuserid}
+	</update>
+	
+	<!-- 查询所有的系统管理员辅助信息 -->
+	<select id="selectAll" flushCache="false" resultMap="UserInfoResultMap">
+		select * from ht_userinfo 
+	</select>
+	
+	<!-- 通过账号查询缴费方式 -->
+	<select id="selectByUserId" flushCache="false" resultMap="UserInfoResultMap">
+		select * from ht_userinfo where uuserid=#{uuserid}
+	</select>
+	
+</mapper>

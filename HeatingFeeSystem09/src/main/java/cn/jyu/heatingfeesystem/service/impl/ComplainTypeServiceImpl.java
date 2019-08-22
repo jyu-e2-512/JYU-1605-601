@@ -13,7 +13,7 @@ import lombok.Data;
 @Service("complainTypeService")
 @Data
 public class ComplainTypeServiceImpl implements ComplainTypeService {
-	//@Autowired
+	@Autowired
 	private ComplainTypeMapper complainTypeMapper;
 	public void insert(ComplainTypeModel complainType) {
 		

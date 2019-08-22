@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @MapperScan("cn.jyu.heatingfeesystem.mapper")
 @ComponentScan(basePackages= {"cn.jyu.heatingfeesystem"})
-
 public class AppConfig {
 	@Bean
 	public RestTemplate restTemplate() {

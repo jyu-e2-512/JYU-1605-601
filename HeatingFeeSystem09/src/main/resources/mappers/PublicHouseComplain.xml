@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.PublicHouseComplainMapper">
+	
+	<resultMap type="PublicHouseComplain" id="PublicHouseComplainResultMap">
+		<id property="complainNo" column="complainNo"/>
+		<result property="publicHouseModel.houseNo" column="houseNo"/>
+		<result property="complainTypeModel.typeNo" column="typeNo"/>
+		<result property="complainTitle" column="complainTitle"/>
+		<result property="complainContent" column="complainContent"/>
+		<result property="requestContent" column="requestContent"/>
+		<result property="complainDate" column="complainDate"/>
+		<result property="contactPerson" column="contactPerson"/>
+		<result property="tel" column="tel"/>
+		<result property="mobile" column="mobile"/>
+		<result property="mail" column="mail"/>
+		<result property="qq" column="qq"/>
+		<result property="serviceStartDate" column="serviceStartDate"/>
+		<result property="serviceEndDate" column="serviceEndDate"/>
+		<result property="serviceContent" column="serviceContent"/>
+		<result property="servicePerson" column="servicePerson"/>
+		<result property="feedBackDate" column="feedBackDate"/>
+		<result property="houseComment" column="houseComment"/>
+		<result property="assuranceDate" column="assuranceDate"/>
+		<result property="assuranceFee" column="assuranceFee"/>
+		<result property="assurancePayDate" column="assurancePayDate"/>
+		<result property="complainStatus" column="complainStatus"/>
+	</resultMap>
+	
+	<!-- 增加房屋类型 -->
+	<insert id="insert" flushCache="true" parameterType="cn.jyu.heatingfeesystem.model.PublicHouseComplainModel">
+		insert into ht_publichousecomplain  values(#{complainNo},#{publicHouse},#{complainType},#{complainTitle},#{complainContent},#{requestContent},#{complainDate},#{contactPerson},#{tel},#{mobile},#{mail},#{qq},#{serviceStartDate},#{serviceEndDate},#{serviceContent},#{servicePerson},#{feedBackDate},#{houseComment},#{assuranceDate},#{assuranceFee},#{assurancePayDate},#{complainStatus})
+	</insert>
+	
+	<!-- 删除房屋类型 -->
+	<delete id="delete" flushCache="true" parameterType="int">
+		delete from ht_publichousecomplain  where complainNo=#{complainNo}
+	</delete>
+	
+	<!--修改房屋类型 -->
+	<update id="update" flushCache="true" parameterType="cn.jyu.heatingfeesystem.model.PublicHouseComplainModel">
+		update ht_publichousecomplain set publicHouse=#{publicHouse},complainType=#{complainType},complainTitle=#{complainTitle},complainContent=#{complainContent},requestContent=#{requestContent},complainDate=#{complainDate},contactPerson=#{contactPerson},tel=#{tel},mobile=#{mobile},mail=#{mail},qq=#{qq},serviceStartDate=#{serviceStartDate},serviceEndDate=#{serviceEndDate},serviceContent=#{serviceContent},servicePerson=#{servicePerson},feedBackDate=#{feedBackDate},houseComment=#{houseComment},assuranceDate=#{assuranceDate},assuranceFee=#{assuranceFee},assurancePayDate=#{assurancePayDate},complainStatus=#{complainStatus} where complainNo=#{complainNo}
+	</update>
+	
+	<!-- 查询所有的房屋类型 -->
+	<select id="selectAll" flushCache="false" resultMap="PublicHouseComplainResultMap">
+		select * from ht_publichousecomplain 
+	</select>
+	
+	<!-- 通过编号查询房屋类型 -->
+	<select id="selectByTypeNo" flushCache="false" resultMap="PublicHouseComplainResultMap">
+		select * from ht_publichousecomplain where complainNo=#{complainNo}
+	</select>
+	
+
+
+
+
+</mapper>

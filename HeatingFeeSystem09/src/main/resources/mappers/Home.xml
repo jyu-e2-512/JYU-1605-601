@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.HomeMapper">
+	<cache/>
+	<resultMap id="HomeResultMap" type="Home">
+		<id property="homeNo" column="homeno"/>
+		<result property="heatingCode" column="heatingcode"/>	
+		<result property="homeName" column="homename"/>	
+		<result property="buildingCode" column="buildingcode"/>	
+		<result property="departmentCode" column="departmentcode"/>	
+		<result property="floorCode" column="floorcode"/>	
+		<result property="houseCode" column="housecode"/>	
+		<result property="homeArea" column="homearea"/>	
+		<result property="direction" column="direction"/>	
+		<result property="tel" column="tel"/>	
+		<result property="mobile" column="mobile"/>	
+		<result property="mail" column="mail"/>
+		<result property="qq" column="qq"/>	
+		<result property="heatingStatus" column="heatingstatus"/>	
+		<result property="heatingArea" column="heatingarea"/>	
+ 	</resultMap>
+ 	
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="HomeResultMapWithHouseTypeByNestedResultMap" type="Home" extends="HomeResultMap">
+ 		<association property="houseTypeModel" resultMap="cn.jyu.heatingfeesystem.mapper.HouseTypeMapper.HouseTypeResultMap"/>
+ 	</resultMap>
+ 	
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="HomeResultMapWithHomeByNestedResultMap" type="Home" extends="HomeResultMap">
+ 		<association property="neighbourhoodModel" resultMap="cn.jyu.heatingfeesystem.mapper.NeighbourhoodMapper.NeighbourhoodResultMap"/>
+ 	</resultMap>
+ 	
+	<!--//增加家庭信息  -->
+	<insert id="insert" flushCache="true">
+		insert into ht_home value(#{homeNo},#{heatingCode},#{houseTypeModel.typeNo},#{neighbourhoodModel.hoodNo},#{homeName},#{buildingCode},
+		#{departmentCode},#{floorCode},#{houseCode},#{homeArea},#{direction},#{tel},
+		#{mobile},#{mail},#{qq},#{heatingStatus},#{heatingArea})
+		
+	</insert>
+	
+	<!--删除家庭信息  -->
+	<delete id="delete" flushCache="true">
+		delete from ht_home  where homeno=#{homeNo}
+	</delete>
+	
+	<!--//修改家庭信息  -->
+	<update id="update" flushCache="true">
+		update ht_home set heatingCode=#{heatingCode},typeNo=#{houseTypeModel.typeNo},hoodNo=#{neighbourhoodModel.hoodNo},homeName=#{homeName},buildingCode=#{buildingCode},
+		departmentCode=#{departmentCode},floorCode=#{floorCode},houseCode=#{houseCode},homeArea=#{homeArea},direction=#{direction},tel=#{tel},
+		mobile=#{mobile},mail=#{mail},qq=#{qq},heatingStatus=#{heatingStatus},heatingArea=#{heatingArea}
+		where homeno=#{homeNo}
+	</update>
+	
+	<!-- 查询所有的家庭信息 -->
+	<select id="selectAll" flushCache="false" resultMap="HomeResultMap">
+		select * from ht_home
+	</select>
+
+	<!-- 通过编号查询家庭信息 -->
+	<select id="selectByHomeNo" flushCache="false" resultMap="HomeResultMap">
+		select * from ht_home where homeno=#{homeNo}
+	</select>
+
+
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.HomeFeePayRecordMapper">
+	
+	<resultMap type="homeFeePayRecord" id="HomeFeePayRecordResultMap">
+		<id property="recordNo" column="recordNo"/>
+		<result property="homeFee.feeNo" column="feeNo"/>
+		<result property="paymentType.typeNo" column="typeNo"/>
+		<result property="payAmount" column="payAmount"/>
+		<result property="payDate" column="payDate"/>
+		<result property="payPerson" column="payPerson"/>
+		<result property="checkCode" column="checkCode"/>
+		<result property="invoiceCode" column="invoiceCode"/>
+		<result property="payDesc" column="payDesc"/>
+		<result property="recordStatus" column="recordStatus"/>
+	</resultMap>
+	
+	<!-- 增加缴费记录 -->
+	<insert id="insert" flushCache="true" parameterType="cn.jyu.heatingfeesystem.model.HomeFeePayRecordModel">
+		insert into ht_homefeepayrecord  values(#{recordNo},#{feeNo},#{paymentTypeNo},#{payAmount},#{payDate},#{payPerson},#{checkCode},#{invoiceCode},#{payDesc},#{recordStatus})
+	</insert>
+	
+	<!-- 删除缴费记录 -->
+	<delete id="delete" flushCache="true" parameterType="int">
+		delete from ht_homefeepayrecord where recordNo=#{recordNo}
+	</delete>
+	
+	<!--修改缴费记录 -->
+	<update id="update" flushCache="true" parameterType="cn.jyu.heatingfeesystem.model.HomeFeePayRecordModel">
+		update ht_homefeepayrecord set feeNo=#{feeNo},paymentTypeNo=#{paymentTypeNo},payAmount=#{payAmount},payDate=#{payDate},payPerson=#{payPerson},checkCode=#{checkCode},invoiceCode=#{invoiceCode},payDesc=#{payDesc},recordStatus=#{recordStatus} where recordNo=#{recordNo}
+	</update>
+	
+	<!-- 查询所有的缴费记录 -->
+	<select id="selectAll" flushCache="false" resultMap="HomeFeePayRecordResultMap">
+		select * from ht_homefeepayrecord 
+	</select>
+	
+	<!-- 通过编号查询缴费记录 -->
+	<select id="selectByTypeNo" flushCache="false" resultMap="HomeFeePayRecordResultMap">
+		select * from ht_homefeepayrecord where recordNo=#{recordNo}
+	</select>
+	
+
+
+
+
+</mapper>

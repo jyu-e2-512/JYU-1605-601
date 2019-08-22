@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.FunctionMapper">
+
+	<!-- 功能的基础resultmap，不包含关联属性 -->
+	<resultMap type="Function" id="FunctionResultMap">
+		<id property="funNo" column="funno"/>
+		<result property="funName" column="funname"/>
+		<result property="funUrl" column="funurl"/>
+		<result property="levelNo" column="levelno"/>
+	</resultMap>
+
+	<!-- 增加一种功能 -->
+	<insert id="insert" flushCache="true">
+		insert into ht_function values(#{funNo},#{funName},#{funUrl},#{levelNo})
+	</insert>
+	
+	<!-- 删除一种功能 -->
+	<delete id="delete" flushCache="true">
+		delete from ht_function where funno=#{funNo}
+	</delete>
+	
+	<!--修改指定的功能 -->
+	<update id="update" flushCache="true">
+		update ht_function set funname=#{funName},funurl=#{funUrl},levelno=#{levelNo} where funno=#{funNo}
+	</update>
+	
+	<!-- 查询所有的功能 -->
+	<select id="selectAll" flushCache="false" resultMap="FunctionResultMap">
+		select * from ht_function 
+	</select>
+	
+	<!-- 通过编号查询功能 -->
+	<select id="selectByFunno" flushCache="false" resultMap="FunctionResultMap">
+		select * from ht_function where funno=#{funNo}
+	</select>
+	
+</mapper>

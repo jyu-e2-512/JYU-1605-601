@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.HomeFeeReturnRecordMapper">
+
+	<cache/>
+	<resultMap id="HomeFeeReturnRecordResultMap" type="HomeFeeReturnRecord">
+		<id property="recordNo" column="recordno"/>
+		<result property="amount" column="amount"/>
+		<result property="returnDate" column="returndate"/>
+		<result property="person" column="person"/>
+		<result property="checkCode" column="checkcode"/>
+		<result property="invoiceCode" column="invoicecode"/>
+		<result property="recordDesc" column="recorddesc"/>
+		<result property="recordStatus" column="recordstatus"/>
+ 	</resultMap>
+ 	
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="HomeFeeReturnRecordResultMapWithHomeFeeByNestedResultMap" type="HomeFeeReturnRecord" extends="HomeFeeReturnRecordResultMap">
+ 		<association property="homeFeeModel" resultMap="cn.jyu.heatingfeesystem.mapper.HomeFeeMapper.HomeFeeResultMap"/>
+ 	</resultMap>
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="HomeFeeReturnRecordResultMapWithHomeByNestedResultMap" type="HomeFeeReturnRecord" extends="HomeFeeReturnRecordResultMap">
+ 		
+ 		<association property="homeModel" resultMap="cn.jyu.heatingfeesystem.mapper.HomeMapper.HomeResultMap"/>
+ 	</resultMap>
+ 	<!-- 内嵌式resultmap -->
+ 	<resultMap id="HomeFeeReturnRecordResultMapWithPaymentTypeByNestedResultMap" type="HomeFeeReturnRecord" extends="HomeFeeReturnRecordResultMap">
+ 		<association property="paymentTypeModel" resultMap="cn.jyu.heatingfeesystem.mapper.PaymentTypeMapper.PaymentTypeResultMap"/>
+ 	</resultMap>
+ 	
+
+	<!-- 增加一条住宅供热退费记录 -->
+	<insert id="insert" flushCache="true">
+		insert into ht_homefeereturnrecord values(#{recordNo},#{feeNo},#{homeNo},
+		#{paymentTypeNo},#{amount},#{returnDate},#{person},#{checkCode},#{invoiceCode},
+		#{recordDesc},#{recordStatus})
+	</insert>
+	
+	<!-- 删除一条住宅供热退费记录 -->
+	<delete id="delete" flushCache="true">
+		delete from ht_homefeereturnrecord  where recordno=#{recordNo}
+	</delete>
+	
+	<!--修改住宅供热退费记录 -->
+	<update id="update" flushCache="true">
+		update ht_homefeereturnrecord set feeno=#{feeNo},homeno=#{homeNo},
+		paymenttypeno=#{paymentTypeNo},amount=#{amount},returndate=#{returnDate},
+		person=#{person},checkcode=#{checkCode},invoicecode=#{invoiceCode},
+		recordesc=#{recordDesc},recordstatus=#{recordStatus} where recordno=#{recordNo}
+	</update>
+	
+	<!-- 查询所有的住宅供热退费记录 -->
+	<select id="selectAll" flushCache="false" resultMap="HomeFeeReturnRecordResultMap">
+		select * from ht_homefeereturnrecord 
+	</select>
+	
+	<!-- 通过编号查询住宅供热退费记录 -->
+	<select id="selectByFeeNo" flushCache="false" resultMap="HomeFeeReturnRecordResultMap">
+		select * from ht_homefeereturnrecord where recordno=#{recordNo}
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.HouseTypeMapper">
+	<cache/>
+	<resultMap id="HouseTypeResultMap" type="HouseType">
+		<id property="typeNo" column="typeno"/>
+		<result property="typeName" column="typename"/>	
+ 	</resultMap>
+ 	
+	<!-- 增加房屋类型 -->
+	<insert id="insert" flushCache="true">
+		insert into ht_housetype  values(#{typeNo},#{typeName})
+	</insert>
+	
+	<!-- 删除房屋类型 -->
+	<delete id="delete" flushCache="true">
+		delete from ht_housetype  where typeno=#{typeNo}
+	</delete>
+	
+	<!--修改房屋类型 -->
+	<update id="update" flushCache="true">
+		update ht_housetype set typename=#{typeName} where typeno=#{typeNo}
+	</update>
+	
+	<!-- 查询所有的房屋类型 -->
+	<select id="selectAll" flushCache="false" resultMap="HouseTypeResultMap">
+		select * from ht_housetype 
+	</select>
+	
+	<!-- 通过编号查询房屋类型 -->
+	<select id="selectByTypeNo" flushCache="false" resultMap="HouseTypeResultMap">
+		select * from ht_housetype where typeno=#{typeNo}
+	</select>
+	
+
+
+
+
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.HeatingPriceMapper">
+	<cache/>
+	<resultMap id="HeatingPriceResultMap" type="HeatingPrice">
+		<id property="heatingYear" column="heatingyear"/>
+		<result property="homePrice" column="homeprice"/>
+		<result property="publicHousePrice" column="publichouseprice"/>
+		<result property="heatingdays" column="heatingdays"/>
+		<result property="heatingMemo" column="heatingmemo"/>
+		<result property="priceFile" column="pricefile"/>
+		<result property="priceFileName" column="pricefilename"/>
+		<result property="priceFileContentType" column="pricefilecontenttype"/>
+ 	</resultMap>
+	
+	
+	<!-- 增加一种年度供热价格 -->
+	<insert id="insert" flushCache="true">
+		insert into ht_heatingprice values(#{heatingYear},#{homePrice},#{publicHousePrice},#{heatingMemo},#{heatingdays},#{priceFile},#{priceFileName},#{priceFileContentType})
+	</insert>
+	
+	<!-- 删除一种年度供热价格 -->
+	<delete id="delete" flushCache="true">
+		delete from ht_heatingprice  where heatingyear=#{heatingYear}
+	</delete>
+	
+	<!--修改年度供热价格 -->
+	<update id="update" flushCache="true">
+		update ht_heatingprice set heatingyear=#{heatingYear},homeprice=#{homePrice},publichouseprice=#{publicHousePrice},
+		heatingmemo=#{heatingMemo},heatingdays=#{heatingdays},pricefile=#{priceFile},pricefilename=#{priceFileName},
+		pricefilecontenttype#{priceFileContentType} where heatingyear=#{heatingYear}
+	</update>
+	
+	<!-- 查询所有的年度供热价格 -->
+	<select id="selectAll" flushCache="false" resultMap="HeatingPriceResultMap">
+		select * from ht_heatingprice
+	</select>
+	
+	<!-- 通过编号查询年度供热价格 -->
+	<select id="selectByHeatingYear" flushCache="false" resultMap="HeatingPriceResultMap">
+		select * from ht_heatingprice where heatingyear=#{heatingYear}
+	</select>
+	<!-- 查询所有年度供热价格的总数 -->
+	<select id="selectCountByAll" resultType="int">
+		select IFNULL(count(heatingyear), 0) from ht_heatingprice
+	</select>
+	
+	<!-- 取得所有部门列表,分页模式 -->
+	<select id="selectListByAllWithPage" resultMap="HeatingPriceResultMap">
+		select * from ht_heatingprice limit #{start},#{rows}
+	</select>
+</mapper>

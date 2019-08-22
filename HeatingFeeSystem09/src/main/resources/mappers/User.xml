@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.UserMapper">
+
+	<cache/>
+	<resultMap id="UserResultMap" type="User">
+		<id property="uuserid" column="uuserid"/>
+		<result property="upassword" column="upassword"/>
+		<result property="uname" column="uname"/>
+ 	</resultMap>
+
+	<!-- 内嵌式resultmap -->
+ 	<resultMap id="UserResultMapWithFunctionsByNestedResultMap" type="User" extends="UserResultMap">
+ 		<collection property="functionModels" resultMap="cn.jyu.heatingfeesystem.mapper.FunctionMapper.FunctionResultMap"/>
+ 	</resultMap>
+
+	<!-- 增加一个操作员 -->
+	<insert id="insert" flushCache="true">
+		insert into ht_user values(#{uuserid},#{upassword},#{uname})
+	</insert>
+	
+	<!-- 删除操作员 -->
+	<delete id="delete" flushCache="true">
+		delete from ht_user  where uuserid=#{uuserid}
+	</delete>
+	
+	<!--修改操作员信息-->
+	<update id="update" flushCache="true">
+		update ht_user set upassword=#{upassword},uname=#{uname} where uuserid=#{uuserid}
+	</update>
+	
+	<!-- 查询所有的操作员 -->
+	<select id="selectAll" flushCache="false" resultMap="UserResultMap">
+		select * from ht_user 
+	</select>
+	
+	<!-- 通过编号查询操作员 -->
+	<select id="selectById" flushCache="false" resultMap="UserResultMap">
+		select * from ht_user where uuserid=#{uuserid}
+	</select>
+	
+	
+</mapper>

@@ -2,6 +2,7 @@ package cn.jyu.heatingfeesystem.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.jyu.heatingfeesystem.mapper.NeighbourhoodMapper;
@@ -13,6 +14,7 @@ import lombok.Data;
 @Service("neighbourhoodService")
 @Data
 public class NeighbourhoodServiceImpl implements NeighbourhoodService{
+	@Autowired
 	private NeighbourhoodMapper neighbourhoodMapper;
 	
 	@Override

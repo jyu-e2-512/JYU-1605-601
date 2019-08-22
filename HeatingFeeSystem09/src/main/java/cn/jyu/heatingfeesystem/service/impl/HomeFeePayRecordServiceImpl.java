@@ -2,6 +2,7 @@ package cn.jyu.heatingfeesystem.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.jyu.heatingfeesystem.mapper.HomeFeePayRecordMapper;
@@ -19,7 +20,7 @@ import lombok.Data;
 @Service("homeFeePayRecordService")
 @Data
 public class HomeFeePayRecordServiceImpl implements HomeFeePayRecordService{
-	
+	@Autowired
 	private HomeFeePayRecordMapper homeFeePayRecordMapper;
 	@Override
 	public void insert(HomeFeePayRecordModel homeFeePayRecord) {

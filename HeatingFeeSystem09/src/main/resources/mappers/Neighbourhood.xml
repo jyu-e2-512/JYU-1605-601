@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jyu.heatingfeesystem.mapper.NeighbourhoodMapper">
+	
+	<resultMap type="Neighbourhood" id="NeighbourhoodResultMap">
+		<id property="hoodNo" column="hoodNo"/>
+		<result property="hoodName" column="hoodName"/>
+		<result property="address" column="address"/>
+	</resultMap>
+	
+	<!-- 增加房屋类型 -->
+	<insert id="insert" flushCache="true" parameterType="cn.jyu.heatingfeesystem.model.NeighbourhoodModel">
+		insert into ht_neighbourhood  values(#{hoodNo},#{hoodName},#{address})
+	</insert>
+	
+	<!-- 删除房屋类型 -->
+	<delete id="delete" flushCache="true" parameterType="int">
+		delete from ht_neighbourhood  where hoodNo=#{hoodNo}
+	</delete>
+	
+	<!--修改房屋类型 -->
+	<update id="update" flushCache="true" parameterType="cn.jyu.heatingfeesystem.model.NeighbourhoodModel">
+		update ht_neighbourhood set hoodName=#{hoodName},address=#{address} where hoodNo=#{hoodNo}
+	</update>
+	
+	<!-- 查询所有的房屋类型 -->
+	<select id="selectAll" flushCache="false" resultMap="NeighbourhoodResultMap">
+		select * from ht_neighbourhood 
+	</select>
+	
+	<!-- 通过编号查询房屋类型 -->
+	<select id="selectByTypeNo" flushCache="false" resultMap="NeighbourhoodResultMap">
+		select * from ht_neighbourhood where hoodNo=#{hoodNo}
+	</select>
+	
+
+
+
+
+</mapper>
