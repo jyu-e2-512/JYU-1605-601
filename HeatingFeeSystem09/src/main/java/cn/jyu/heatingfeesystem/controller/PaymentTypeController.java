@@ -38,8 +38,8 @@ public class PaymentTypeController
 		result.setPageCount(paymentTypeService.getPageCountByAll(rows));
 		result.setPage(page);
 		result.setRows(rows);	
-		System.out.println("mmp");
-		System.out.println(rows+" "+page);
+		System.out.println("当前页数"+page+"/"+result.getPageCount());
+		System.out.println("每页数量:"+rows);
 		return result;
 	}
 	
@@ -48,6 +48,7 @@ public class PaymentTypeController
 	public ResultMessage<PaymentTypeModel> add(PaymentTypeModel paymentType) 
 	{
 		paymentTypeService.insert(paymentType);
+		System.out.println("添加");
 		return new ResultMessage<PaymentTypeModel>("OK", "添加年度供热价格成功");
 	}
 	

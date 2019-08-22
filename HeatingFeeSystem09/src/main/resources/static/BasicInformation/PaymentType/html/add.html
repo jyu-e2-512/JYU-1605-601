@@ -22,17 +22,18 @@
 				$("#main").load(url);
 			});
 			//点击提交后确认
-			$("#smt").on("click",function(){
-				var url="../../BasicInformation/PaymentType/html/selectAll.html";
-				$("#main").load(url);
-				
-				if(confirm("确定增加该付款类型?")){
+			$("#smt").on("click",function()
+			{				
+				if(confirm("确定增加该付款类型?"))
+				{
+					$.get("http://localhost:8080/paymenttype/add",{page:page,rows:rows},function(date)
+					{
+						alert("mmp");
+					});	
 					var url="../../BasicInformation/PaymentType/html/selectAll.html";
 					$("#main").load(url);				　　
 				}
 			});
-			
-			
 		});
 	</script>
 		

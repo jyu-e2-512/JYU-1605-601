@@ -1,25 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>付款类型展示页面</title>
-	
-
+	<!-- js内容 -->
 	<script type="text/javascript">
+	
+	
+	
+	
 		$(function() {
 			
-			
-			//获取数据
-			$.get("http://localhost:8080/paymenttype/list/all/page",{page:page,rows:rows},function(date)
+			//获取数据函数
+			function getDate(page,rows)
 			{
-				alert(page);
-				alert(date.list);
-				alert("获取数据");
-			});		
+				var page=$("#page").html();
+				var rows=$("#rows").val();
+				$.get("http://localhost:8080/paymenttype/list/all/page",{page:page,rows:rows},function(date)
+				{
+					
+					var before="<table style='width:80%;' align='center' class='table table-hover table-bordered'>";
+					var after="</table>";
+					
+					var str=""+before;
+					for(var i=0;i<date.list.length;i++)
+					{
+						str+="<tr>";
+						str+="<td>"+(i+1)+"</td>";
+						str+="<td>";
+						str+=(date.list)[i].typeName;
+						str+="</td>";						
+						str+="<td><input class='delete' type='button' value='删除'>&nbsp;&nbsp;&nbsp;<input class='update' type='button' value='修改'></td>";
+						
+						str+="</tr>";
+					}
+					
+					str+=after;
+					$("#show").html(str);
+					$("#totals").html(date.pageCount);
+				});	
+			}
 			
+			//进来页面后刷新数据
+			getDate();			
+			//失去每页数量文本框焦点后更新事件
+			$("#rows").on("blur",function(){
+				getDate();
+			});
 			
 			//让所有的表格内容居中
-			$("td,th").addClass("text-center");
+			//$("td,th").addClass("text-center");
 			//点击增加按钮加载add.html页面
 			$("#add").on("click",function(){
 				var url="../../BasicInformation/PaymentType/html/add.html";
@@ -28,6 +53,7 @@
 			//点击删除确认后删除此记录
 			$(".delete").on("click",function()
 			{
+				alert("删除");
 				var ok=confirm("确定删除增加该付款类型?");
 				if(ok==true){
 					var url="../../BasicInformation/PaymentType/html/selectAll.html";
@@ -44,38 +70,17 @@
 		});
 	</script>
 		
-</head>
-<body>
+<!-- body内容 -->
 	
-	<table style="width:80%;" align="center" id="show" class="table table-hover table-bordered">
-		<tr class="text-center">
-			<td colspan="3"><font size="4" color="red">付款类型列表</font></td>
-		</tr>
+		<div id="show"></div>
 		
-		<tr>
-			<td width="25%">序号</td>
-			<td width="25%">付款类型</td>
-			<td width="25%">操作</td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>aa</td>
-			<td>
-				<input class="delete" type="button" value="删除">&nbsp;&nbsp;&nbsp;
-				<input class="update" type="button" value="修改">
-			</td>
-		</tr>
-		
-	</table>
-	
 		<br><br>
 		<div  id="pageinfo" style="float: left;margin-left: 10%">
 			当前页数&nbsp;<font id="page">1</font>&nbsp;/&nbsp;<font id="totals">5</font> &nbsp;&nbsp;
-			每页数量&nbsp;&nbsp;<input id="rows" size="7" type="text">
+			每页数量&nbsp;&nbsp;<input id="rows" value="5" size="7" type="text">
 		</div>
-		
-		<div style="float: left;margin-left: 20%">
-		
+	
+		<div style="float: left;margin-left: 20%">		
 			<input id="add" type="button" value="增加付款类型" />
 		</div>
 		
@@ -85,7 +90,3 @@
 			<input type="button" value="下页">
 			<input type="button" value="末页">
 		</div>
-
-
-</body>
-</html>
