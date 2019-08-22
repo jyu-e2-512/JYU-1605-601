@@ -6,14 +6,14 @@ $(function(){
 	var rows=10;
 	var page=1;
 	var pageCount=0;
-	var heatingYear=""; // 选择的年份
+	var hoodNo=""; // 选择的小区
 	
 	// 设置系统页面标题
-	$("span#mainpagetille").html("年度价格管理");
-	// 取得年度价格的列表，分页模式
+	$("span#mainpagetille").html("小区信息维护");
+	// 取得小区信息的列表，分页模式
 	function getListInfo(){
-		// 调用后台取得年度价格列表REST API
-		$.getJSON("http://localhost:8080/heatingprice/list/all/page",{page:page,rows:rows},function(data){
+		// 调用后台取得小区信息列表REST API
+		$.getJSON("http://localhost:8080/neighbourhood/list/all/page",{page:page,rows:rows},function(data){
 				// 显示个数和页数
 				$("span#count").html(data.count);
 				$("span#pagecount").html(data.page+"/"+data.pageCount);
@@ -21,14 +21,14 @@ $(function(){
 				// 显示列表
 				$("table#DepartmentTable tbody").html("");
 				for(var i=0;i<data.list.length;i++){
-					var tr="<tr id='"+data.list[i].heatingYear+"'><td>"+data.list[i].heatingYear+"</td><td>"+data.list[i].homePrice+"</td><td>"
-					+data.list[i].publicHousePrice+"</td><td>"+data.list[i].heatingdays+"</td><td>"+data.list[i].heatingMemo+"</td></tr>";
-					$("table#heatingPriceTable tbody").append(tr);
+					var tr="<tr id='"+data.list[i].hoodNo+"'><td>"+data.list[i].hoodNo+"</td><td>"+data.list[i].hoodName+"</td><td>"
+					+data.list[i].address+"</td></tr>";
+					$("table#neighbourhoodTable tbody").append(tr);
 				}
-				// 定义表格行的点击时间，取得选择的年份
-				$("table#heatingPriceTable tbody tr").on("click",function(){
-					heatingYear=$(this).attr("id");
-					$("table#heatingPriceTable tbody tr").css("background-color","#FFFFFF");
+				// 定义表格行的点击时间，取得选择的小区
+				$("table#neighbourhoodTable tbody tr").on("click",function(){
+					hoodNo=$(this).attr("id");
+					$("table#neighbourhoodTable tbody tr").css("background-color","#FFFFFF");
 					$(this).css("background-color","#CDCD9A");
 				});
 		 });
@@ -65,129 +65,118 @@ $(function(){
 	// 初始调用取得分页列表数据
 	getListInfo();
 	// 点击增加链接处理，嵌入add.html
-	$("a#heatingPriceAddLink").off().on("click",function(event){
+	$("a#neighbourhoodAddLink").off().on("click",function(event){
 				
-		$("div#heatingPriceDialogArea").load("HeatingPrice/add.html",function(){
-			$("div#heatingPriceDialogArea" ).dialog({
-				title:"增加年度供热价格",
+		$("div#neighbourhoodDialogArea").load("Neighbourhood/add.html",function(){
+			$("div#neighbourhoodDialogArea" ).dialog({
+				title:"增加小区信息",
 				width:600
 			});
 			// 验证数据
-			$("form#heatingPriceAddForm" ).validate({
+			$("form#NeighbourhoodAddForm" ).validate({
 				  rules: {
-				    heatingYear: {
+					  hoodNo: {
 				      required: true,
-				      year: true
+				      number: true
 				    },
-				    heatingdays: {
+				    hoodName: {
 					      required: true,
-					      digits: true
+					      maxlength:5
 					},
-				    homePrice:{
+					address:{
 				    	required: true,
-				    	number:true 
-				    },
-				    publicHousePrice:{
-				    	required: true,
-				    	number:true 
-				    },
-				    heatingMemo:{
-				    	required: true
+				    	maxlength:5
 				    }
+				   
+				    
 				  },
 				  messages:{
-					heatingYear: {
+					  hoodNo: {
 						
-					    required: "年份为空或非法"
+					    required: "序号为空或非法"
 					},
-					heatingdays:{		
-					    required: "供热天数为空或非法"
+					hoodName:{		
+					    required: "名称为空或非法"
 					},
-					homePrice:{		
-					    required: "居民供热价格为空或非法"
-					},
-					publicHousePrice:{		
-					    required: "公建供热价格为空或非法"
-					},
-					heatingMemo:{
-						required: "备注为空或非法"
+					address:{		
+					    required: "地址为空或非法"
 					}
+					
+					
 				 }
 			});
 			// 拦截增加表单提交
-			$("form#heatingPriceAddForm").ajaxForm(function(result){
+			$("form#NeighbourhoodAddForm").ajaxForm(function(result){
 				if(result.status=="OK"){
 					getListInfo(); 
 				}
 				// alert(result.message);
 				// BootstrapDialog.alert(result.message);
 				BootstrapDialog.show({
-		            title: '年度供热价格操作信息',
+		            title: '小区信息操作信息',
 		            message:result.message
 		        });
-				$("div#heatingPriceDialogArea" ).dialog( "close" );
-				$("div#heatingPriceDialogArea" ).dialog( "destroy" );
-				$("div#heatingPriceDialogArea").html("");
+				$("div#neighbourhoodDialogArea" ).dialog( "close" );
+				$("div#neighbourhoodDialogArea" ).dialog( "destroy" );
+				$("div#neighbourhoodDialogArea").html("");
 				
 			});
 			// 点击取消按钮处理
 			$("input[value='取消']").on("click",function(){
-				$( "div#heatingPriceDialogArea" ).dialog( "close" );
-				$( "div#heatingPriceDialogArea" ).dialog( "destroy" );
-				$("div#heatingPriceDialogArea").html("");
+				$( "div#neighbourhoodDialogArea" ).dialog( "close" );
+				$( "div#neighbourhoodDialogArea" ).dialog( "destroy" );
+				$("div#neighbourhoodDialogArea").html("");
 			});
 		});
 		
 	});
 	
 	// 点击修改按钮事件处理
-	$("a#heatingPriceModifyLink").off().on("click",function(event){
+	$("a#neighbourhoodModifyLink").off().on("click",function(event){
 		if(heatingYear==null){
 			BootstrapDialog.show({
-	            title: '年度供热价格操作信息',
-	            message:"请选择要修改的年份"
+	            title: '小区操作信息',
+	            message:"请选择要修改的编号"
 	        });
 		}
 		else {
-			$("div#heatingPriceDialogArea").load("HeatingPrice/modify.html",function(){
+			$("div#neighbourhoodDialogArea").load("neighbourhood/modify.html",function(){
 				// 取得选择的年份
-				$.getJSON("heatingprice/get",{heatingYear:heatingYear},function(data){
+				$.getJSON("neighbourhood/get",{hoodNo:hoodNo},function(data){
 					if(data.status=="OK"){	
-						$("input[name='heatingYear']").val(heatingYear);
-						$("input[name='homePrice']").val(data.model.homePrice);
-						$("input[name='publicHousePrice']").val(data.model.publicHousePrice);
-						$("input[name='heatingdays']").val(data.model.heatingdays);
-						$("input[name='heatingMemo']").val(data.model.heatingMemo);
+						$("input[name='hoodNo']").val(hoodNo);
+						$("input[name='hoodName']").val(data.model.hoodName);
+						$("input[name='address']").val(data.model.address);
 					}
 				});
 				
-				$("div#heatingPriceDialogArea" ).dialog({
+				$("div#neighbourhoodDialogArea" ).dialog({
 					title:"年度供热价格修改",
 					width:600
 				});
 				// 拦截表单提交
-				$("form#heatingPriceModifyForm").ajaxForm(function(result){
+				$("form#neighbourhoodModifyForm").ajaxForm(function(result){
 					if(result.status=="OK"){
 						getListInfo(); 
 					}
 					// alert(result.message);
 					// BootstrapDialog.alert(result.message);
 					BootstrapDialog.show({
-			            title: '年度供热操作信息',
+			            title: '小区操作信息',
 			            message:result.message
 			        });
-					$("div#heatingPriceDialogArea" ).dialog( "close" );
-					$("div#heatingPriceDialogArea" ).dialog( "destroy" );
-					$("div#heatingPriceDialogArea").html("");
+					$("div#neighbourhoodDialogArea" ).dialog( "close" );
+					$("div#neighbourhoodDialogArea" ).dialog( "destroy" );
+					$("div#neighbourhoodDialogArea").html("");
 					
 				});
 				
 				
 				// 点击取消按钮处理
 				$("input[value='取消']").on("click",function(){
-					$( "div#heatingPriceDialogArea" ).dialog( "close" );
-					$( "div#heatingPriceDialogArea" ).dialog( "destroy" );
-					$("div#heatingPriceDialogArea").html("");
+					$( "div#neighbourhoodDialogArea" ).dialog( "close" );
+					$( "div#neighbourhoodDialogArea" ).dialog( "destroy" );
+					$("div#neighbourhoodDialogArea").html("");
 				});
 			});
 			
@@ -197,24 +186,24 @@ $(function(){
 	});
 	
 	// 点击删除按钮事件处理
-	$("a#heatingPriceDelteLink").off().on("click",function(event){
+	$("a#neighbourhoodDelteLink").off().on("click",function(event){
 		
-		if(heatingYear==null){
+		if(hoodNo==null){
 			BootstrapDialog.show({
-	            title: '年度供热价格操作信息',
-	            message:"请选择要删除的年份信息"
+	            title: '小区操作信息',
+	            message:"请选择要删除的小区信息"
 	        });
 		}
 		else {
 			
-			BootstrapDialog.confirm('确认删除此部门么?', function(result){
+			BootstrapDialog.confirm('确认删除此小区么?', function(result){
 			     if(result) {
-			              $.post("heatingprice/delete",{heatingYear:heatingYear},function(result){
+			              $.post("neighbourhood/delete",{hoodNo:hoodNo},function(result){
 			                	if(result.status=="OK"){
 									getListInfo(); 
 								}
 								BootstrapDialog.show({
-						            title: '年度供热价格操作信息',
+						            title: '小区操作信息',
 						            message:result.message
 						        });
 			                });
@@ -228,7 +217,7 @@ $(function(){
 	});
 	
 	  //点击查看详细按钮事件处理
-	  $("a#heatingPriceViewLink").off().on("click",function(event){
+	  $("a#neighbourhoodViewLink").off().on("click",function(event){
 	  
 		  if(heatingYear==null){ 
 			  BootstrapDialog.show(
@@ -236,28 +225,27 @@ $(function(){
 						  title: '年度供热价格操作信息',
 						  message:"请选择要查看的年度" }); 
 		  } else{
-			  $("div#heatingPriceDialogArea").load("HeatingPrice/view.html",function(){
+			  $("div#neighbourhoodDialogArea").load("Neighbourhood/view.html",function(){
 				  //取得选择的年份
-				  $.getJSON("heatingprice/get",{heatingYear:heatingYear},function(data){
+				  $.getJSON("neighbourhood/get",{hoodNo:hoodNo},function(data){
 					  if(data.status=="OK"){ 
-						  $("span#heatingYear").html(data.model.heatingYear);
-						  $("span#heatingdays").html(data.model.heatingdays); 
-						  $("span#homePrice").html(data.model.homePrice); 
-						  $("span#publicHousePrice").html(data.model.publicHousePrice); 
-						  $("span#heatingMemo").html(data.model.heatingMemo); 
+						  $("span#hoodNo").html(data.model.hoodNo);
+						  $("span#hoodName").html(data.model.hoodName); 
+						  $("span#address").html(data.model.address); 
+						 
 						  } 
 					  }); 
 				  //弹出Dialog
-				  $("div#heatingPriceDialogArea" ).dialog(
+				  $("div#neighbourhoodDialogArea" ).dialog(
 				  		{ 
-				  			title:"年度供热价格详细", 
+				  			title:"小区详细", 
 				  			width:600 
 				  	});
 				  	//点击取消按钮处理 
 				  	$("input[value='返回']").on("click",function(){ 
-				  		$("div#heatingPriceDialogArea" ).dialog( "close" ); 
-				  		$("div#heatingPriceDialogArea" ).dialog( "destroy" );
-				  		$("div#heatingPriceDialogArea").html(""); 
+				  		$("div#neighbourhoodDialogArea" ).dialog( "close" ); 
+				  		$("div#neighbourhoodDialogArea" ).dialog( "destroy" );
+				  		$("div#neighbourhoodDialogArea").html(""); 
 				  		}); 
 				  	}); 
 			  } 

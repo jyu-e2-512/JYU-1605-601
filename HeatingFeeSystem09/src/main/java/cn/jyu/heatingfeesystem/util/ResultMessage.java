@@ -20,7 +20,6 @@ public class ResultMessage<T> implements Serializable {
 	private int page=0; //第几页
 	private int count=0; //信息T的个数
 	private int pageCount=0; //页数
-	private int hoodNo=0;
 	
 	public ResultMessage() {
 		
@@ -80,10 +79,7 @@ public class ResultMessage<T> implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public void setModel(int hooddNo) {
-		this.hoodNo=hoodNo;
-		
-	}
+	
 	
 	
 	
