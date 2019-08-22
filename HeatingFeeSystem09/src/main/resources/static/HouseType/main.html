@@ -1,0 +1,55 @@
+<script type="text/javascript" src="HouseType/main.js"></script>
+<!-- Main row -->
+<div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <div class="row">
+             <div class="col-md-6"> <h4 class="box-title">房屋类型列表</h4></div>
+             <div class="col-md-6 text-right">
+             	<a href="#" id="houseTypeAddLink" class="btn btn-info">增加</a> 
+             	<a href="#" id="houseTypeModifyLink" class="btn btn-info">修改</a> 
+            	<a href="#" id="houseTypeDelteLink" class="btn btn-info">删除</a>
+             	<a href="#" id="houseTypeViewLink" class="btn btn-info">详细</a>
+              </div>
+          </div>
+         
+        </div>
+        <!-- /.box-header -->
+      <div class="box-body" id="houseTypemaincontent">
+        <table id="houseTypeTable" class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>编号</th>
+            <th>名字</th>
+          
+          </tr>
+          </thead>
+          <tbody>
+          
+          </tfoot>
+		</table>
+		<div class="row">
+		  <div class="col-md-6 text-left">
+		    编号个数:<span id="count"></span>  页数:<span id="pagecount"></span>
+		   </div>
+		   <div class="col-md-6 text-right" id="page_nav">
+		   <a href="top" class="btn btn-default">首页</a> 
+		   <a href="pre" class="btn btn-default">上页</a>
+		   <a href="next" class="btn btn-default">下页</a>
+		   <a href="last" class="btn btn-default">末页</a>
+		   </div>
+		</div>
+       
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+   
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+<div id="houseTypeDialogArea">
+    
+</div>

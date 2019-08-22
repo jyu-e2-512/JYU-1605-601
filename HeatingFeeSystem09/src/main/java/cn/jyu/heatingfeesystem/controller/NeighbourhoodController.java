@@ -42,7 +42,7 @@ public class NeighbourhoodController {
 	public ResultMessage<NeighbourhoodModel> delete(int hoodNo) {
 		neighbourhoodService.delete(hoodNo);
 		ResultMessage<NeighbourhoodModel> result = new ResultMessage<NeighbourhoodModel>("OK", "修改年度供热价格成功");
-		result.setModel(hoodNo);
+		//result.setModel(hoodNo);
 		return result;
 	}
 
