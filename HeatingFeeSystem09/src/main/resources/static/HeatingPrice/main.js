@@ -1,6 +1,6 @@
 /**
- * 部门的前端控制JS
- * 作者：吕海东
+ * 年度供热价格的前端控制JS
+ * 作者：陈武杰
  * 
  */
 $(function(){
@@ -65,31 +65,54 @@ $(function(){
 	
 	//初始调用取得分页列表数据
 	getListInfo();
-	/*//点击增加链接处理，嵌入add.html
+	//点击增加链接处理，嵌入add.html
 	$("a#heatingPriceAddLink").off().on("click",function(event){
 				
 		$("div#heatingPriceDialogArea").load("HeatingPrice/add.html",function(){
 			$("div#heatingPriceDialogArea" ).dialog({
-				title:"增加部门",
+				title:"增加年度供热价格",
 				width:600
 			});
 			//验证数据
 			$("form#heatingPriceAddForm" ).validate({
 				  rules: {
-				    code: {
-				      required: true
+				    heatingYear: {
+				      required: true,
+				      year: true
 				    },
-				    name:{
+				    heatingdays: {
+					      required: true,
+					      digits: true
+					},
+				    homePrice:{
+				    	required: true,
+				    	number:true 
+				    },
+				    publicHousePrice:{
+				    	required: true,
+				    	number:true 
+				    },
+				    heatingMemo:{
 				    	required: true
 				    }
 				  },
 				  messages:{
-					code: {
-					      required: "部门编码为空"
-					    },
-					    name:{
-					    	required:"部门名称为空"
-					    }
+					heatingYear: {
+						
+					    required: "年份为空或非法"
+					},
+					heatingdays:{		
+					    required: "供热天数为空或非法"
+					},
+					homePrice:{		
+					    required: "居民供热价格为空或非法"
+					},
+					publicHousePrice:{		
+					    required: "公建供热价格为空或非法"
+					},
+					heatingMemo:{
+						required: "备注为空或非法"
+					}
 				 }
 			});
 			//拦截增加表单提交
@@ -100,7 +123,7 @@ $(function(){
 				//alert(result.message);
 				//BootstrapDialog.alert(result.message);
 				BootstrapDialog.show({
-		            title: '部门操作信息',
+		            title: '年度供热价格操作信息',
 		            message:result.message
 		        });
 				$("div#heatingPriceDialogArea" ).dialog( "close" );
@@ -117,28 +140,30 @@ $(function(){
 		});
 		
 	});
+	
 	//点击修改按钮事件处理
 	$("a#heatingPriceModifyLink").off().on("click",function(event){
 		if(heatingYear==null){
 			BootstrapDialog.show({
-	            title: '部门操作信息',
-	            message:"请选择要修改的部门"
+	            title: '年度供热价格操作信息',
+	            message:"请选择要修改的年份"
 	        });
 		}
 		else {
 			$("div#heatingPriceDialogArea").load("HeatingPrice/modify.html",function(){
-				//取得选择的部门
-				$.getJSON("heatingprice/get",{no:departmentNo},function(data){
-					if(data.status=="OK"){
-						$("input[name='no']").val(departmentNo);
-						$("input[name='code']").val(data.model.code);
-						$("input[name='name']").val(data.model.name);
-						
+				//取得选择的年份
+				$.getJSON("heatingprice/get",{heatingYear:heatingYear},function(data){
+					if(data.status=="OK"){	
+						$("input[name='heatingYear']").val(heatingYear);
+						$("input[name='homePrice']").val(data.model.homePrice);
+						$("input[name='publicHousePrice']").val(data.model.publicHousePrice);
+						$("input[name='heatingdays']").val(data.model.heatingdays);
+						$("input[name='heatingMemo']").val(data.model.heatingMemo);
 					}
 				});
 				
 				$("div#heatingPriceDialogArea" ).dialog({
-					title:"部门修改",
+					title:"年度供热价格修改",
 					width:600
 				});
 				//拦截表单提交
@@ -149,7 +174,7 @@ $(function(){
 					//alert(result.message);
 					//BootstrapDialog.alert(result.message);
 					BootstrapDialog.show({
-			            title: '部门操作信息',
+			            title: '年度供热操作信息',
 			            message:result.message
 			        });
 					$("div#heatingPriceDialogArea" ).dialog( "close" );
@@ -171,7 +196,7 @@ $(function(){
 		
 		
 	});
-	
+	/*
 	//点击删除按钮事件处理
 	$("a#heatingPriceDelteLink").off().on("click",function(event){
 		

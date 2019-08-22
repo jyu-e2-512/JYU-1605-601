@@ -19,12 +19,11 @@ import cn.jyu.heatingfeesystem.util.ResultMessage;
  *
  */
 @RestController
-@RequestMapping(value="/heatingprice")
+@RequestMapping(value = "/heatingprice")
 @CrossOrigin
 public class HeatingPriceController {
 	@Autowired
 	private HeatingPriceService heatingPriceService = null;
-	
 
 	// 添加年度供热价格
 	@RequestMapping("/add")
@@ -48,6 +47,13 @@ public class HeatingPriceController {
 		return new ResultMessage<HeatingPriceModel>("OK", "修改年度供热价格成功");
 	}
 
+	// 通过年份查询年度供热价格
+	@GetMapping("/get")
+	public ResultMessage<HeatingPriceModel> getByHeatingYear(String heatingYear) {
+		heatingPriceService.selectByHeatingYear(heatingYear);
+		return new ResultMessage<HeatingPriceModel>("OK", "通过年份查询年度供热价格成功");
+	}
+
 	// 查询所有年度供热价格，无分页
 	@GetMapping("/list/all")
 	public ResultMessage<HeatingPriceModel> seleteAll() throws Exception {
@@ -59,13 +65,15 @@ public class HeatingPriceController {
 
 	// 查询所有年度供热价格，分页
 	@RequestMapping("/list/all/page")
-	public ResultMessage<HeatingPriceModel> seleteAllWithPage(@RequestParam(required = false,defaultValue ="10") int rows,@RequestParam(required = false,defaultValue = "1") int page) throws Exception {
-		ResultMessage<HeatingPriceModel> result=new ResultMessage<HeatingPriceModel>("OK","取得年度供热价格列表分页模式成功");
+	public ResultMessage<HeatingPriceModel> seleteAllWithPage(
+			@RequestParam(required = false, defaultValue = "10") int rows,
+			@RequestParam(required = false, defaultValue = "1") int page) throws Exception {
+		ResultMessage<HeatingPriceModel> result = new ResultMessage<HeatingPriceModel>("OK", "取得年度供热价格列表分页模式成功");
 		result.setCount(heatingPriceService.selectCountByAll());
 		result.setPageCount(heatingPriceService.getPageCountByAll(rows));
 		result.setList(heatingPriceService.selectListByAllWithPage(rows, page));
 		result.setPage(page);
-		result.setRows(rows);		
+		result.setRows(rows);
 		return result;
 	}
 }

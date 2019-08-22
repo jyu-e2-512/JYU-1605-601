@@ -1,6 +1,12 @@
 /**
  * 自定义的验证规则
  */
+//验证年份
+$.validator.addMethod("year", function(value,element,params){
+   var zippattern = /^[0-9]{4}$/; 
+   return this.optional(element)||zippattern.test(value);
+	
+} ,"非法的年份");
 //验证邮政编码
 $.validator.addMethod("zipcode", function(value,element,params){
    var zippattern = /^[0-9]{6}$/; 
