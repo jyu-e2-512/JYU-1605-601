@@ -41,8 +41,8 @@ public class NeighbourhoodServiceImpl implements NeighbourhoodService{
 	}
 
 	@Override
-	public NeighbourhoodModel selectByTypeNo(int hooddNo) {
-		NeighbourhoodModel neighbourhood=neighbourhoodMapper.selectByTypeNo(hooddNo);
+	public NeighbourhoodModel selectByTypeNo(int hoodNo) {
+		NeighbourhoodModel neighbourhood=neighbourhoodMapper.selectByHoodNo(hoodNo);
 		return neighbourhood;
 	}
 
