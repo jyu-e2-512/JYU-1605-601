@@ -30,7 +30,7 @@
 	<update id="update" flushCache="true">
 		update ht_heatingprice set heatingyear=#{heatingYear},homeprice=#{homePrice},publichouseprice=#{publicHousePrice},
 		heatingmemo=#{heatingMemo},heatingdays=#{heatingdays},pricefile=#{priceFile},pricefilename=#{priceFileName},
-		pricefilecontenttype#{priceFileContentType} where heatingyear=#{heatingYear}
+		pricefilecontenttype=#{priceFileContentType} where heatingyear=#{heatingYear}
 	</update>
 	
 	<!-- 查询所有的年度供热价格 -->
