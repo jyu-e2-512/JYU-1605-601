@@ -20,7 +20,7 @@ $(function(){
 				$("span#pagecount").html(data.page+"/"+data.pageCount);
 				pageCount=data.pageCount;
 				// 显示列表
-				$("table#DepartmentTable tbody").html("");
+				$("table#heatingPriceTable tbody").html("");
 				for(var i=0;i<data.list.length;i++){
 					var tr="<tr id='"+data.list[i].heatingYear+"'><td>"+data.list[i].heatingYear+"</td><td>"+data.list[i].homePrice+"</td><td>"
 					+data.list[i].publicHousePrice+"</td><td>"+data.list[i].heatingdays+"</td><td>"+data.list[i].heatingMemo+"</td></tr>";

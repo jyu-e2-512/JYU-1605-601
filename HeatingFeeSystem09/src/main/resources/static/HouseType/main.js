@@ -7,7 +7,7 @@ $(function(){
 	var rows=10;
 	var page=1;
 	var pageCount=0;
-	var typeNo=""; //选择的年份
+	var typeNo=0; //选择的编号
 	
 	//设置系统页面标题
 	$("span#mainpagetille").html("房屋类型管理");
@@ -20,9 +20,9 @@ $(function(){
 				$("span#pagecount").html(data.page+"/"+data.pageCount);
 				pageCount=data.pageCount;
 				//显示列表
-				$("table#DepartmentTable tbody").html("");
+				$("table#houseTypeTable tbody").html("");
 				for(var i=0;i<data.list.length;i++){
-					var tr="<tr id='"+data.list[i].typeNo+"'><td>"+data.list[i].typeName+"</td></tr>";
+					var tr="<tr id='"+data.list[i].typeNo+"'><td>"+data.list[i].typeNo+"</td><td>"+data.list[i].typeName+"</td></tr>";
 					$("table#houseTypeTable tbody").append(tr);
 				}
 				//定义表格行的点击时间，取得选择的年份
@@ -133,7 +133,7 @@ $(function(){
 				$.getJSON("housetype/get",{typeNo:typeNo},function(data){
 					if(data.status=="OK"){	
 						$("input[name='typeNo']").val(typeNo);
-						$("input[name='typeName']").val(typeName);
+						$("input[name='typeName']").val(data.model.typeName);
 			
 					}
 				});
@@ -183,15 +183,7 @@ $(function(){
 	        });
 		}
 		else {
-			//先检查此部门能否被删除
-			$.getJSON("housetype/checkDelete",{no:typeNo},function(data){
-				if(data.status!="OK"){
-					BootstrapDialog.show({
-			            title: '房屋类型操作信息',
-			            message:data.message
-			        });
-				}
-				else{
+			
 					BootstrapDialog.confirm('确认删除此房屋类型么?', function(result){
 			            if(result) {
 			                $.post("houseType/delete",{no:typeNo},function(result){
@@ -205,8 +197,8 @@ $(function(){
 			                });
 			            }
 			        });
-				}
-			});
+				
+			
 			
 		}
 		
@@ -226,10 +218,10 @@ $(function(){
 		else{
 			$("div#houseTypeDialogArea").load("HouseType/view.html",function(){
 				//取得选择的编号
-				$.getJSON("housetype/get",{no:typeNo},function(data){
+				$.getJSON("housetype/get",{typeNo:typeNo},function(data){
 					if(data.status=="OK"){
-						$("span#typeNo").html(data.typeNo);
-						$("span#typeName").html(data.typeName);
+						$("span#typeNo").html(data.model.typeNo);
+						$("span#typeName").html(data.model.typeName);
 						
 					}
 				});
