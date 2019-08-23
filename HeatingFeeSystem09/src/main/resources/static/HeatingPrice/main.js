@@ -2,6 +2,7 @@
  * 年度供热价格的前端控制JS 作者：陈武杰
  * 
  */
+
 $(function(){
 	var rows=10;
 	var page=1;

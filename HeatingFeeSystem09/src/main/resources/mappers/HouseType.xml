@@ -34,7 +34,15 @@
 		select * from ht_housetype where typeno=#{typeNo}
 	</select>
 	
-
+	<!-- 查询所有房型个数 -->
+	<select id="selectCountByAll" resultType="int">
+		select IFNULL(count(typeno), 0) from ht_housetype
+	</select>
+	
+	<!-- 取得所有房型列表,分页模式 -->
+	<select id="selectListByAllWithPage" resultMap="HouseTypeResultMap">
+		select * from ht_housetype limit #{start},#{rows}
+	</select>
 
 
 

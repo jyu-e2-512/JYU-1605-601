@@ -1,12 +1,12 @@
 package cn.jyu.heatingfeesystem.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import cn.jyu.heatingfeesystem.model.HouseTypeModel;
 import cn.jyu.heatingfeesystem.service.HouseTypeService;
@@ -22,11 +22,11 @@ import cn.jyu.heatingfeesystem.util.ResultMessage;
 @RequestMapping(value="/housetype")
 @CrossOrigin
 public class HouseTypeController {
-	// @Autowired
+	 @Autowired
 	private HouseTypeService houseTypeService = null;
 
 	// 添加房屋类型
-	@PostMapping("/add")
+	@RequestMapping("/add")
 	public ResultMessage<HouseTypeModel> add(HouseTypeModel houseType) {
 		System.out.println("AAA");
 		houseTypeService.insert(houseType);
@@ -65,7 +65,7 @@ public class HouseTypeController {
 	}
 
 	// 查询所有房屋类型，无分页
-	@PostMapping("/list/all")
+	@GetMapping("/list/all")
 	public ResultMessage<HouseTypeModel> seleteAll() {
 		ResultMessage<HouseTypeModel> result = new ResultMessage<HouseTypeModel>("OK", "查询所有房屋类型成功，无分页");
 		result.setList(houseTypeService.selectAll());
@@ -73,7 +73,7 @@ public class HouseTypeController {
 	}
 
 	// 查询所有房屋类型，分页
-	@PostMapping("/list/all/page")
+	@RequestMapping("/list/all/page")
 	public ResultMessage<HouseTypeModel> seleteAllWithPage(
 			@RequestParam(required = false,defaultValue ="10") int rows,
 			@RequestParam(required = false,defaultValue = "1") int page) throws Exception {
