@@ -31,10 +31,14 @@
 	</select>
 	
 	<!-- 通过编号查询房屋类型 -->
-	<select id="selectByTypeNo" flushCache="false" resultMap="NeighbourhoodResultMap">
+	<select id="selectByHoodNo" flushCache="false" resultMap="NeighbourhoodResultMap">
 		select * from ht_neighbourhood where hoodNo=#{hoodNo}
 	</select>
 	
+	<!-- 取得所有部门列表,分页模式 -->
+	<select id="selectListByAllWithPage" resultMap="NeighbourhoodResultMap">
+		select * from ht_neighbourhood limit #{start},#{rows}
+	</select>
 
 
 
